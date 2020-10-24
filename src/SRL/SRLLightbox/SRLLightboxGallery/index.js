@@ -225,7 +225,7 @@ const SRLLightboxGallery = ({
     a.href = selectedElement.skipFetchBeforeDownload
       ? selectedElement.source
       : await toDataURL(selectedElement.source)
-    a.download = true
+    a.download = selectedElement.download_name || 'download'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

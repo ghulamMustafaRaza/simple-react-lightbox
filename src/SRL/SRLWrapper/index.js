@@ -177,6 +177,7 @@ const SRLWrapper = ({
           type: i.type || 'img',
           props: i.props || {},
           skipFetchBeforeDownload: !i.fetchBeforeDownload,
+          download_name: i.download_name,
           thumbnail: i.thumbnail || i.src || null,
           caption: i.caption || null,
           id: `${index}`,
