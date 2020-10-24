@@ -171,8 +171,12 @@ const SRLWrapper = ({
     function handleImagesPassedViaProps(array) {
       const elements = array.map((i, index) => {
         // Creates an object for each element
+        console.log(i)
         const element = {
           source: i.src || null,
+          type: i.type || 'img',
+          props: i.props || {},
+          skipFetchBeforeDownload: !i.fetchBeforeDownload,
           thumbnail: i.thumbnail || i.src || null,
           caption: i.caption || null,
           id: `${index}`,
@@ -217,14 +221,14 @@ const SRLWrapper = ({
             // If it's a link grabs the "href" attribute
             // (in case of a gatsby image we need to go up to the wrapper Div and find the parent)
             source:
-              elementType === 'IMG'
+              elementType(index) === 'IMG'
                 ? e.img.currentSrc || e.img.src || e.img.href || null
                 : e.img.parentElement.href ||
                   e.img.offsetParent.parentElement.href ||
                   null,
 
             thumbnail:
-              elementType === 'IMG'
+              elementType(index) === 'IMG'
                 ? e.img.currentSrc || e.img.src || e.img.href || null
                 : e.img.currentSrc || e.img.parentElement.href || null,
 
@@ -299,7 +303,10 @@ const SRLWrapper = ({
           const elementType = instance.elements[0].nodeName
           if (!imagesAreLoaded) {
             setImagesAreLoaded(true)
-            handleImagesWithContext(instance.images, elementType)
+            handleImagesWithContext(
+              instance.images,
+              (i) => instance.elements[i].nodeName
+            )
           }
         }
       })
@@ -309,17 +316,18 @@ const SRLWrapper = ({
     function handleDetectTypeOfElements(array) {
       // Grabs images in the ref
       const collectedElements = array.querySelectorAll('img')
+      const collectedVideoElements = array.querySelectorAll('video')
       // Filtered collected elemenets is used to exclude Gatsby images inside the <picture></picture> tag
-      const filteredCollectedElements = Array.from(collectedElements).filter(
-        (e) => {
+      const filteredCollectedElements = Array.from(collectedElements)
+        .filter((e) => {
           return (
             e.parentNode.localName !== 'picture' &&
             !e.parentNode.offsetParent.className.includes(
               'gatsby-image-wrapper'
             )
           )
-        }
-      )
+        })
+        .concat(Array.from(collectedVideoElements))
       // Grabs data attributes (in links) in the ref
       const collectedDataAttributes = array.querySelectorAll(
         "a[data-attribute='SRL']"

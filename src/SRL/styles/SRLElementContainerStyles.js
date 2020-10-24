@@ -105,8 +105,48 @@ export const SRLImage = styled.img`
   cursor: ${(props) => (props.disablePanzoom ? 'auto' : 'zoom-in')};
 `
 
+// Image Element
+export const SRLVideo = styled.video`
+  background: transparent;
+  border: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all 200ms ease;
+  opacity: 1;
+  margin: auto;
+  z-index: 9997;
+  // cursor: ${(props) => (props.disablePanzoom ? 'auto' : 'zoom-in')};
+`
+
 // The Pan-zoomed image
 export const SRLPanzoomedImage = styled.img`
+  top: 0;
+  left: 0;
+  position: relative;
+  transform-origin: 50% 50% !important;
+  cursor: grab;
+  z-index: 9997;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+`
+
+// The Pan-zoomed image
+export const SRLPanzoomedVideo = styled.video`
   top: 0;
   left: 0;
   position: relative;

@@ -13,7 +13,8 @@ import {
   SRLElementContainer,
   SRLElementWrapper,
   SRLImage,
-  SRLPanzoomedImage
+  SRLPanzoomedImage,
+  SRLVideo
   // SRLLightboxVideo
 } from '../../../styles/SRLElementContainerStyles'
 
@@ -32,6 +33,8 @@ function SRLContainerComponent({
   options,
   panzoomEnabled,
   source,
+  type,
+  props,
   SRLPanzoomImageRef,
   SRLThumbnailsRef,
   SRLCaptionRef,
@@ -211,17 +214,36 @@ function SRLContainerComponent({
               opacity: { duration: settings.slideTransitionSpeed }
             }}
           >
-            {!panzoomEnabled && (
-              <SRLImage
-                className="SRLImage"
-                disablePanzoom={settings.disablePanzoom}
-                width={imgWidth}
-                height={imgHeight}
-                onClick={() => handlePanzoom(true)}
-                src={typeof source === 'object' ? 'Loading...' : source}
-                alt={caption}
-              />
-            )}
+            {!panzoomEnabled &&
+              (type == 'video' ? (
+                <SRLVideo
+                  className="SRLImage"
+                  disablePanzoom={settings.disablePanzoom}
+                  width={imgWidth}
+                  height={imgHeight}
+                  alt={caption}
+                  preload="metadata"
+                  playsInline
+                  muted
+                  {...props}
+                  controls
+                >
+                  <source
+                    src={typeof source === 'object' ? 'Loading...' : source}
+                  />
+                </SRLVideo>
+              ) : (
+                <SRLImage
+                  className="SRLImage"
+                  disablePanzoom={settings.disablePanzoom}
+                  width={imgWidth}
+                  height={imgHeight}
+                  onClick={() => handlePanzoom(true)}
+                  src={typeof source === 'object' ? 'Loading...' : source}
+                  {...props}
+                  alt={caption}
+                />
+              ))}
           </SRLElementWrapper>
 
           {panzoomEnabled ? (

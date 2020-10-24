@@ -8,12 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
-  "browserslist": [
-    "> 0.25%",
-    "not op_mini all",
-    "not dead",
-    "IE 11"
-  ],
+  "browserslist": ["> 0.25%", "not op_mini all", "not dead", "IE 11"],
   "keywords": [
     "react",
     "reactjs",
@@ -95,9 +90,7 @@
     "rollup-plugin-postcss": "^3.1.5",
     "rollup-plugin-terser": "^7.0.0"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
     "fast-deep-equal": "^3.1.1",
     "framer-motion": "^2.3.0",

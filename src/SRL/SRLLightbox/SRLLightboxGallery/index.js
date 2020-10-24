@@ -221,8 +221,11 @@ const SRLLightboxGallery = ({
   }
   async function handleImageDownload() {
     const a = document.createElement('a')
-    a.href = await toDataURL(selectedElement.source)
-    a.download = ''
+    console.log(selectedElement)
+    a.href = selectedElement.skipFetchBeforeDownload
+      ? selectedElement.source
+      : await toDataURL(selectedElement.source)
+    a.download = true
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
